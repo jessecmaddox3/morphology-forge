@@ -5,7 +5,7 @@
 **A word-building game with a football scoreboard, useful hints, and room to think.** Build a word from its pieces, work out a related word, or spot a spelling trap.
 
 - **[Play in your browser](https://jessemaddox.com/projects/morphology-forge/play/)**
-- **[Download the complete offline game](https://github.com/jessecmaddox3/morphology-forge/releases/download/v1.0.0/Morphology-Forge.html)**
+- **[Download the complete offline game](https://github.com/jessecmaddox3/morphology-forge/releases/download/v1.0.1/Morphology-Forge.html)**
 
 I built this for me and my personal use, then cleaned it up so other people could use the whole thing. Make it your own, and feel free to improve mine. Hopefully it gives you a useful starting point, or at the very least some ideas. Cheers!
 
@@ -54,7 +54,7 @@ Use, modify, share or sell your version under the [MIT license](LICENSE). Keep t
 | Local profiles, backups and optional cloud | `public/shared/` and [design notes](docs/design.md) |
 | Give an AI assistant a useful starting point | `skills/adapt-morphology-forge/SKILL.md` |
 
-For source editing, install [Node.js](https://nodejs.org/) version 22 or later. Download and extract the [source ZIP](https://github.com/jessecmaddox3/morphology-forge/releases/download/v1.0.0/morphology-forge-1.0.0-source.zip), open a terminal in that folder, then run:
+For source editing, install [Node.js](https://nodejs.org/) version 22 or later. Download and extract the [source ZIP](https://github.com/jessecmaddox3/morphology-forge/releases/download/v1.0.1/morphology-forge-1.0.1-source.zip), open a terminal in that folder, then run:
 
 ```sh
 npm ci --ignore-scripts
