@@ -1,0 +1,20 @@
+name: Suggest a word or correction
+description: Improve a clue, explanation or word family.
+body:
+  - type: input
+    id: word
+    attributes:
+      label: Which word or part?
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Suggested change and why it helps
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Dictionary or other reference links, if relevant
+      description: Link to sources rather than copying a third-party curriculum.

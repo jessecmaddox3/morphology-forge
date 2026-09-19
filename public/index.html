@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Morphology Forge</title>
+<meta name="description" content="Build words from their pieces.">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f3f1ea">
+<link rel="stylesheet" href="./game.css">
+<!-- The match-day skin, on top of the shared workbench. Morphology is the
+     only one of the games wearing it. -->
+<link rel="stylesheet" href="./morphology.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <h1>Morphology Forge</h1>
+    <a class="back" href="https://github.com/jessecmaddox3/morphology-forge">About this game</a>
+  </header>
+
+  <section id="gameplay" class="screen">
+    <!-- Goals are mastered roots, shots on target is the running accuracy, and
+         the run is the streak. Same three numbers as before, named the way the
+         rest of the page now talks. -->
+    <div class="scoreboard">
+      <span class="stat"><i>Goals</i><b id="mastered">0</b></span>
+      <span class="stat"><i>Shots on target</i><b id="accuracy">0%</b></span>
+      <span class="stat streak"><i>On a run</i><b id="streak">0</b></span>
+    </div>
+
+    <p class="prompt-kind" id="prompt-kind"></p>
+    <div class="prompt" id="prompt" tabindex="-1"></div>
+    <!-- Available from the first second, not after a 45s stall. Asking for a
+         hint should be a move he can make, not a consolation the game offers
+         once it decides he is stuck. -->
+    <button class="ghost hint-btn" type="button" id="hint-btn">Ask the coach</button>
+    <div id="hint" class="hint" role="status" hidden></div>
+    <div id="answer-area"></div>
+    <div id="feedback" class="feedback" role="status" hidden></div>
+    <button class="primary" type="button" id="next" hidden>Next &rarr;</button>
+    <p class="advance-setting"><label><input id="auto-advance" type="checkbox" checked> Move on after a correct answer</label></p>
+    <p class="helper">Turn off automatic advance to read explanations at your own pace. Goals count roots shown without hints in both a build and an inference.</p>
+  </section>
+</div>
+
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+<script src="./bundle.js" defer></script>
+</body>
+</html>

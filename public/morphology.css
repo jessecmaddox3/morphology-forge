@@ -1,0 +1,129 @@
+/* Morphology Forge — the match-day skin.
+ *
+ * Loaded on top of game.css, which the other games keep to themselves. Only
+ * this page wears it.
+ *
+ * The rule it works to: a match-day programme, not a sticker book. The game is for confident readers, so the theme has to arrive through palette, a real
+ * scoreboard and the language of the game, never through cartoons. Chalk lines,
+ * grass green, tabular numbers, and the words on the page unchanged.
+ *
+ * Nothing here touches the content or the difficulty. A goal is still two
+ * different demonstrations of the same root.
+ */
+
+:root {
+  --paper:       #f3f1ea;
+  --accent:      #1f7a43;   /* grass */
+  --accent-ink:  #14562e;
+  --accent-soft: #e2f0e6;
+  --line:        #d5d3c7;
+  --board:       #16281d;   /* the scoreboard's own dark */
+  --board-ink:   #eaf3ec;
+  --board-label: #8dae9a;
+}
+
+/* A halfway line under the masthead, with its centre spot. The whole pitch
+   motif on this page is these eleven pixels; anything more and the workbench
+   turns into a theme park. */
+.masthead {
+  position: relative;
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+  border-bottom: 2px solid rgb(31 122 67 / .26);
+}
+.masthead::after {
+  content: '';
+  position: absolute; left: 50%; bottom: -5px;
+  width: 8px; height: 8px; margin-left: -4px;
+  border-radius: 50%; background: var(--accent); opacity: .45;
+}
+
+/* ---- the scoreboard --------------------------------------------------- */
+
+/* A real board: dark, evenly divided, numbers you could read from the back of
+   a stand. Goals are mastered roots, which is the same fact the old readout
+   gave and a better name for it. */
+.scoreboard {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  padding: 11px 6px 10px;
+  background: var(--board);
+  color: var(--board-ink);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .09);
+  font-size: inherit;
+}
+.scoreboard .stat {
+  flex: 1;
+  display: grid;
+  gap: 1px;
+  text-align: center;
+  border-left: 1px solid rgb(255 255 255 / .09);
+}
+.scoreboard .stat:first-child { border-left: 0; }
+.scoreboard i {
+  font-style: normal; font-size: 10px; line-height: 1.4;
+  letter-spacing: .11em; text-transform: uppercase;
+  color: var(--board-label);
+}
+.scoreboard b {
+  font-size: 24px; line-height: 1.1; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.scoreboard .streak.hot b { color: #6fe0a0; }
+
+/* ---- what kind of round this is --------------------------------------- */
+
+/* Two parts on purpose. The chip carries the theme; the words after it carry
+   the instruction, unchanged from before. A learner should never have
+   to decode a metaphor to find out what the game is asking him to do. */
+.prompt-kind {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.kind-chip {
+  font-size: 11px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase;
+  color: #fff; background: var(--accent);
+  padding: 5px 10px; border-radius: 999px;
+}
+.kind-plain {
+  font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- a goal ------------------------------------------------------------ */
+
+.feedback.good { border-left: 4px solid var(--accent); }
+.feedback.good .verdict { color: var(--accent-ink); font-size: 20px; }
+
+/* The net, drawn as two crossed gradients rather than an image, sweeping in
+   behind the words the moment one goes in. */
+.feedback.good::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: .11;
+  background-image:
+    repeating-linear-gradient(45deg, var(--accent) 0 1px, transparent 1px 9px),
+    repeating-linear-gradient(-45deg, var(--accent) 0 1px, transparent 1px 9px);
+  animation: net-in .45s ease-out;
+}
+@keyframes net-in {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: .11; transform: scale(1); }
+}
+
+.feedback.bad { border-left: 4px solid var(--warn); }
+
+/* ---- the coach --------------------------------------------------------- */
+
+.hint-btn { border-color: rgb(31 122 67 / .4); color: var(--accent-ink); }
+.hint { border-left-width: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback.good::before { animation: none; }
+}
+
+/* Long words stay readable inside the teaching panels when text is enlarged. */
+.prompt > *, .feedback > *, .hint > * { min-width:0; overflow-wrap:anywhere; }

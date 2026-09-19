@@ -1,0 +1,21 @@
+import {build} from 'esbuild';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const read=name=>readFile(path.join(root,name),'utf8');
+const write=(name,data)=>writeFile(path.join(root,name),data);
+await mkdir(path.join(root,'artifacts'),{recursive:true});await mkdir(path.join(root,'public/vendor'),{recursive:true});
+const license=await read('LICENSE'),manifest=JSON.parse(await read('licenses/npm/SOURCES.json'));
+const notices=['Morphology Forge dependency notices. App code and the original AI-assisted teaching bank are MIT licensed.'];
+for(const item of manifest){notices.push(`${item.package} ${item.version} (${item.license})`);for(const file of item.notices)notices.push(await read(file));}
+await write('public/LICENSE.txt',license);await write('public/THIRD_PARTY_NOTICES.txt',notices.join('\n\n'));
+await build({stdin:{contents:"export {createClient} from '@supabase/supabase-js'",resolveDir:root},bundle:true,format:'esm',target:['es2022'],outfile:path.join(root,'public/vendor/supabase.js'),legalComments:'inline'});
+const result=await build({entryPoints:[path.join(root,'public/app.js')],bundle:true,format:'iife',target:['es2022'],write:false,legalComments:'inline',plugins:[{name:'optional-sdk-game-path',setup(b){b.onResolve({filter:/^\.\.\/vendor\/supabase\.js$/},()=>({path:'./vendor/supabase.js',external:true}));}}]});
+const script=result.outputFiles[0].text;await write('public/bundle.js',script);
+let html=await read('public/index.html');html=html.replace('<script src="./app.js" type="module"></script>','<script src="./bundle.js" defer></script>');await write('public/index.html',html);
+const escape=t=>t.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+const credits=`<details id="credits"><summary>Credits and licenses</summary><pre>${escape(license)}\n\n${escape(notices.join('\n\n'))}</pre></details>`;
+html=html.replace('<link rel="stylesheet" href="./game.css">',`<style>${await read('public/game.css')}\n#credits{margin:24px;}#credits pre{white-space:pre-wrap;overflow-wrap:anywhere;}</style>`).replace('<link rel="stylesheet" href="./morphology.css">',`<style>${await read('public/morphology.css')}</style>`).replace('<script src="./bundle.js" defer></script>',`<script>${script.replaceAll('</script','<\\/script')}</script>`).replace('</body>',`${credits}</body>`);
+await write('artifacts/Morphology-Forge.html',html);
+console.log('Built the complete offline game, hosted bundle and optional cloud SDK.');
